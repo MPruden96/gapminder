@@ -1,0 +1,39 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(dslabs)
+library(tidyverse)
+```
+
+```{r, include=FALSE}
+gap2011 <- gapminder %>% 
+  as_tibble() %>% 
+  filter(year == 2011)
+
+head(gap2011)
+```
+
+#Infant Mortality
+```{r}
+ggplot(data = gap2011, aes(x = gdp/population, y = infant_mortality)) + 
+  geom_point(aes(color=continent), size = 2) +
+  ggtitle("Infant Mortality as a Function of Per Capita GDP") + 
+  ylab("Infant Mortality") + 
+  xlab("Per Capita GDP")
+```
+
+
+```{r}
+ggplot(data = gap2011, aes(x = infant_mortality, y = life_expectancy)) + 
+  geom_point(aes(color = continent), size = 2) +
+  geom_smooth(method='lm') + 
+  ggtitle("The Effect of Infant Mortality on Life Expectancy") +
+  ylab("Life Expectancy") +
+  xlab("Infant Mortality")
+```

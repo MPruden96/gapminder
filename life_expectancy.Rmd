@@ -1,0 +1,55 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, include=FALSE}
+library(dslabs)
+library(tidyverse)
+```
+
+```{r, include=FALSE}
+gap2011 <- gapminder %>% 
+  as_tibble() %>% 
+  filter(year == 2011)
+
+head(gap2011)
+```
+
+##Life Expectancy
+
+###Life expectancy as a function of income
+```{r}
+ggplot(data = gap2011, aes(x = gdp/population, y = life_expectancy)) +
+  geom_point( aes(, size = log(population), fill = continent), shape = 21, stroke = 1, color = "black") +
+  xlab("Per Capita GDP") + 
+  ylab("Life Expectancy") 
+```
+
+<br>
+
+###Life expectancy by continent
+```{r}
+ggplot(data = gap2011, aes(x = continent, y = life_expectancy)) + 
+  geom_boxplot(aes(color=continent)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  ylab("Life Expectancy") + 
+  xlab("") + 
+  ggtitle("Life Expectancy by Continent")
+```
+
+<br>
+
+###Life expectancy by region
+```{r}
+ggplot(data = gap2011, aes(x = reorder(region, life_expectancy, FUN = median), y = life_expectancy)) +
+  geom_boxplot(aes(color=continent)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  ylab("Life Expectancy") + 
+  xlab("") + 
+  ggtitle("Life Expectancy by Region")
+```

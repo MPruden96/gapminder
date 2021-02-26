@@ -9,11 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Matthew Pruden" />
 
-<meta name="date" content="2021-02-26" />
 
-<title>lab3 - gapminder</title>
+<title></title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -287,16 +285,7 @@ $(document).ready(function () {
   <a href="index.html">Exploration</a>
 </li>
 <li>
-  <a href="life_expectancy.html">Life Expectancy</a>
-</li>
-<li>
-  <a href="fertility.html">Fertility</a>
-</li>
-<li>
-  <a href="infant_mortality.html">Infant Mortality</a>
-</li>
-<li>
-  <a href="about.html">About Me</a>
+  <a href="about.html">About</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -310,62 +299,29 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">lab3 - gapminder</h1>
-<h4 class="author">Matthew Pruden</h4>
-<h4 class="date">February 26, 2021</h4>
 
 </div>
 
 
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>Today, we’ll use ggplot to visually explore global trends in public health and economics compiled by the Gapminder project. This project was pioneered by Hans Rosling, who is famous for describing the prosperity of nations over time through famines, wars and other historic events with this beautiful data visualization in his 2006 TED Talk: The best stats you’ve ever seen.</p>
-<p><br></p>
-<div id="loading-data" class="section level3">
-<h3>Loading data</h3>
-<pre class="r"><code>library(dslabs)</code></pre>
-<pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.0.3</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Warning: package &#39;tidyverse&#39; was built under R version 4.0.3</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.3</code></pre>
-</div>
-<div id="exploring-fulldata-data" class="section level3">
-<h3>Exploring fulldata data</h3>
-<pre class="r"><code>head(gapminder)</code></pre>
-<pre><code>##               country year infant_mortality life_expectancy fertility
-## 1             Albania 1960           115.40           62.87      6.19
-## 2             Algeria 1960           148.20           47.50      7.65
-## 3              Angola 1960           208.00           35.98      7.32
-## 4 Antigua and Barbuda 1960               NA           62.97      4.43
-## 5           Argentina 1960            59.87           65.39      3.11
-## 6             Armenia 1960               NA           66.86      4.55
-##   population          gdp continent          region
-## 1    1636054           NA    Europe Southern Europe
-## 2   11124892  13828152297    Africa Northern Africa
-## 3    5270844           NA    Africa   Middle Africa
-## 4      54681           NA  Americas       Caribbean
-## 5   20619075 108322326649  Americas   South America
-## 6    1867396           NA      Asia    Western Asia</code></pre>
-</div>
-<div id="subsetting-data-for-2011" class="section level3">
-<h3>Subsetting data for 2011</h3>
-<pre class="r"><code>gap2011 &lt;- gapminder %&gt;% 
-  as_tibble() %&gt;% 
-  filter(year == 2011)
-
-head(gap2011)</code></pre>
-<pre><code>## # A tibble: 6 x 9
-##   country  year infant_mortality life_expectancy fertility population     gdp
-##   &lt;fct&gt;   &lt;int&gt;            &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Albania  2011             14.3            77.4      1.75    2886010 6.32e 9
-## 2 Algeria  2011             22.8            76.1      2.83   36717132 8.11e10
-## 3 Angola   2011            107.             58.1      6.1    21942296 2.70e10
-## 4 Antigu~  2011              7.2            75.9      2.12      88152 8.02e 8
-## 5 Argent~  2011             12.7            76        2.2    41655616 4.73e11
-## 6 Armenia  2011             15.3            73.5      1.5     2967984 4.29e 9
-## # ... with 2 more variables: continent &lt;fct&gt;, region &lt;fct&gt;</code></pre>
-<p><br></p>
-</div>
+<div id="infant-mortality" class="section level1">
+<h1>Infant Mortality</h1>
+<pre class="r"><code>ggplot(data = gap2011, aes(x = gdp/population, y = infant_mortality)) + 
+  geom_point(aes(color=continent), size = 2) +
+  ggtitle(&quot;Infant Mortality as a Function of Per Capita GDP&quot;) + 
+  ylab(&quot;Infant Mortality&quot;) + 
+  xlab(&quot;Per Capita GDP&quot;)</code></pre>
+<pre><code>## Warning: Removed 19 rows containing missing values (geom_point).</code></pre>
+<p><img src="infant_mortality_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = gap2011, aes(x = infant_mortality, y = life_expectancy)) + 
+  geom_point(aes(color = continent), size = 2) +
+  geom_smooth(method=&#39;lm&#39;) + 
+  ggtitle(&quot;The Effect of Infant Mortality on Life Expectancy&quot;) +
+  ylab(&quot;Life Expectancy&quot;) +
+  xlab(&quot;Infant Mortality&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 7 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 7 rows containing missing values (geom_point).</code></pre>
+<p><img src="infant_mortality_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 
 

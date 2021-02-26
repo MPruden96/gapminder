@@ -4,6 +4,12 @@ navbar:
   left:
     - text: "Exploration"
       href: index.html
-    - text: "About"
+    - text: "Life Expectancy"
+      href: life_expectancy.html
+    - text: "Fertility"
+      href: fertility.html
+    - text: "Infant Mortality"
+      href: infant_mortality.html
+    - text: "About Me"
       href: about.html
 output_dir: "."
