@@ -42,16 +42,28 @@ head(gap2011)
 ###Life expectancy as a function of income
 ```{r}
 ggplot(data = gap2011, aes(x = gdp/population, y = life_expectancy)) +
-  geom_point( aes(color = continent, size = population)) + 
+  geom_point( aes(, size = log(population), fill = continent), shape = 21, stroke = 1, color = "black") +
   xlab("Per Capita GDP") + 
-  ylab("Life Expectancy")
+  ylab("Life Expectancy") 
+```
+
+<br>
+
+###Life expectancy by continent
+```{r}
+ggplot(data = gap2011, aes(x = continent, y = life_expectancy)) + 
+  geom_boxplot(aes(color=continent)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  ylab("Life Expectancy") + 
+  xlab("") + 
+  ggtitle("Life Expectancy by Continent")
 ```
 
 <br>
 
 ###Life expectancy by region
 ```{r}
-ggplot(data = gap2011, aes(x = region, y = life_expectancy)) + 
+ggplot(data = gap2011, aes(x = reorder(region, life_expectancy, FUN = median), y = life_expectancy)) +
   geom_boxplot(aes(color=continent)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
   ylab("Life Expectancy") + 
@@ -62,18 +74,33 @@ ggplot(data = gap2011, aes(x = region, y = life_expectancy)) +
 
 ##Fertility
 ```{r}
-
+ggplot(data = gap2011, aes(x = fertility)) + 
+  geom_density(aes(group = continent, fill = continent), alpha = 0.5) +
+  ggtitle("Female Fertility as a Function of Per Capita GDP") + 
+  ylab("Fertility") + 
+  xlab("")
 ```
 
 <br>
 
 ##Infant Mortality
 ```{r}
-
+ggplot(data = gap2011, aes(x = gdp/population, y = infant_mortality)) + 
+  geom_point(aes(color=continent), size = 2) +
+  ggtitle("Infant Mortality as a Function of Per Capita GDP") + 
+  ylab("Infant Mortality") + 
+  xlab("Per Capita GDP")
 ```
 
 
-
+```{r}
+ggplot(data = gap2011, aes(x = infant_mortality, y = life_expectancy)) + 
+  geom_point(aes(color = continent), size = 2) +
+  geom_smooth(method='lm') + 
+  ggtitle("The Effect of Infant Mortality on Life Expectancy") +
+  ylab("Life Expectancy") +
+  xlab("Infant Mortality")
+```
 
 
 
